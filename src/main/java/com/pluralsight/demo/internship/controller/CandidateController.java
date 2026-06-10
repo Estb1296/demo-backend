@@ -2,7 +2,6 @@ package com.pluralsight.demo.internship.controller;
 
 import com.pluralsight.demo.internship.model.Candidate;
 import com.pluralsight.demo.internship.service.CandidateService;
-import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,12 +20,14 @@ public class CandidateController {
 
     @GetMapping
     public ResponseEntity<List<Candidate>> getAllCandidates(
-            @RequestParam(required = false) String fieldOfStudy) {
+            @RequestParam(required = false) String fieldOfStudy,@RequestParam(required = false) String name) {
         List<Candidate> candidates;
         if (fieldOfStudy != null) {
             candidates = candidateService.getCandidatesByFieldOfStudy(fieldOfStudy);
-        } else {
-            candidates = candidateService.getAllCandidates();
+        } else if(name != null) {
+             candidates = candidateService.getCandidateByName(name);
+        }else{
+            candidates= candidateService.getAllCandidates();
         }
         return ResponseEntity.ok(candidates);
     }
@@ -57,4 +58,10 @@ public class CandidateController {
         candidateService.deleteCandidate(id);
         return ResponseEntity.noContent().build();
     }
+    @GetMapping("/name/{name}")
+    public ResponseEntity<List<Candidate>> searchByName(@PathVariable String name){
+        List<Candidate> candidates = candidateService.getCandidateByName(name);
+        return ResponseEntity.ok(candidates);
+    }
+
 }
