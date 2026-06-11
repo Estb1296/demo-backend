@@ -58,7 +58,7 @@ public class CandidateController {
         candidateService.deleteCandidate(id);
         return ResponseEntity.noContent().build();
     }
-    @GetMapping("/name/{name}")
+    @GetMapping("/search/name/{name}")
     public ResponseEntity<List<Candidate>> searchByName(@PathVariable String name){
         List<Candidate> candidates = candidateService.getCandidateByName(name);
         return ResponseEntity.ok(candidates);

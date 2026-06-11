@@ -1,6 +1,8 @@
 package com.pluralsight.demo.internship.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -18,11 +20,12 @@ public class Candidate {
     
     private String fieldOfStudy;
 
-    private LocalDateTime registeredAt;
 
     private boolean visible;
 
-
+    @CreationTimestamp
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime registeredAt;
 
     // Constructors
     public Candidate() {

@@ -24,7 +24,7 @@ public class InternshipController {
         return ResponseEntity.ok(internships);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("search/Id/{id}")
     public ResponseEntity<Internship> getInternshipById(@PathVariable Long id) {
         // Intentional flaw: no try-catch, lets RuntimeException bubble up
         Internship internship = internshipService.getInternshipById(id);
@@ -50,5 +50,10 @@ public class InternshipController {
     public ResponseEntity<Void> deleteInternship(@PathVariable Long id) {
         internshipService.deleteInternship(id);
         return ResponseEntity.noContent().build();
+    }
+    @GetMapping("/search/company/{company}")
+    public ResponseEntity<List<Internship>> getInternshipByCompany(@PathVariable String company){
+        List<Internship> internship = internshipService.searchByCompany(company);
+        return ResponseEntity.ok(internship);
     }
 }

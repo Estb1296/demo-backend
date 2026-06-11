@@ -54,4 +54,9 @@ public class InternshipService {
     public void deleteInternship(Long id) {
         internshipRepository.deleteById(id);
     }
+
+    public List<Internship>searchByCompany(String company){
+
+        return internshipRepository.findByCompanyContainingIgnoreCase(company);
+    }
 }

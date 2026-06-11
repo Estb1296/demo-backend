@@ -10,6 +10,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -55,6 +56,16 @@ class InternshipControllerTest {
                 .andExpect(jsonPath("$[0].company").value("Tech Corp"))
                 .andExpect(jsonPath("$[1].title").value("Data Analyst"))
                 .andExpect(jsonPath("$.length()").value(2));  // 2 items
+    }
+
+    @Test
+    void getAllInternships_shouldReturnNoInternships() throws Exception{
+        when(internshipService.getAllInternships()).thenReturn(Collections.emptyList());
+        mockMvc.perform(get("/api/internships")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())           // 200 OK with empty response
+                .andExpect(jsonPath("$").isArray())   // Verify it's an array
+                .andExpect(jsonPath("$.length()").value(0));  // Verify it's empty
     }
 
     @Test
